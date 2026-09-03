@@ -1,21 +1,46 @@
 const display = document.querySelector(".values");
 const equalsButton = document.getElementById("equals");
-const operatorButtons = document.getElementById("operators");
-let equasion = []
+//const operatorButtons = document.getElementById("operators");
+const allOperatorButtons = document.querySelectorAll(".operator");
+//console.log(allOperatorButtons);
+let equasion = [];
+let currentOperator ="";
 let num = ""; 
+let firstNumber = ""; 
+let secondNumber = "";
+let total = "";
 
-function numberPressed(num){
-    equasion.push(num);
+
+///debug
+const firstNumberDebug = document.querySelector(".firstNumber");
+const secondNumberDebug = document.querySelector(".secondNumber");
+
+
+function clearDisplay(){
+    display.textContent = ""
+}
+
+function debugFirstSecond(){
+    firstNumberDebug.textContent = "firstNum = " +firstNumber;
+    secondNumberDebug.textContent = "secondNum = " + secondNumber;
+}
+// function numberPressed(num){
+//     equasion.push(num);
     
-}
+// }
 
-function numberOne(){
-    display.textContent = "1"
+// function numberOne(){
+//     display.textContent = "1"
+// }
+function deselectAllOperators(){
+    for (let i = 0; i <= 5; i++){
+        let operatorID = allOperatorButtons[i].id;       
+        allOperatorButtons[i].classList.remove("clickedOperator");   
+    }
 }
-
 function operatorSelected(operator){
+    deselectAllOperators();
     const currentId = operator.id ;
-    console.log(currentId);
     const operatorPressed = document.getElementById(currentId);
     if (operator.classList.contains("clickedOperator"))
     {
@@ -24,34 +49,108 @@ function operatorSelected(operator){
         operatorPressed.classList.add("clickedOperator")
     }
     
+    
+    switch(operator.id){
+        case "clear": {
+            display.textContent = "";
+            firstNumber = "";
+            secondNumber = ""; 
+            num = ""; 
+            operatorPressed.classList.remove("clickedOperator")
+        }break;
+        case "equals": {
+            operatorPressed.classList.remove("clickedOperator")
+            let result
+            switch(currentOperator){
+                case "multi": {
+                    result = multiply(firstNumber, secondNumber);
+                    //secondNumber = firstNumber; 
+                    num = result;
+                    display.textContent = result; 
+                }break; 
+                case "add": {
+                    result = add(firstNumber, secondNumber)
+                    secondNumber = firstNumber; 
+                    num = result;
+                    display.textContent = result; ;
+                }break;
+                case "sub":{
+                    result = subtract(firstNumber, secondNumber)
+                    secondNumber = firstNumber; 
+                    num = result;
+                    display.textContent = result; ;
+                }break;
+                case "div": {
+                    result = divide(firstNumber, secondNumber)
+                    secondNumber = firstNumber; 
+                    num = result;
+                    display.textContent = result; ;
+                }
+                
+            }break;
+            
+        }
+        case "multi":
+        case "add":
+        case "sub":
+        case "div":{
+            currentOperator = operator.id
+            
+        };break; 
+
+
+    }
+    if (num !== ""){
+        firstNumber = parseInt(num); 
+    };
+    num = "";
+
+
+    
+    
 }
 
 const numOne = document.getElementById("one");
-const button = document.querySelector(".numbers");
+const button = document.querySelector(".buttons");
+
+
 
 
 button.addEventListener("click", (event)=>{
-    selectedButton = event.target
-    //console.log({selectedButton});
-})
-
-button.addEventListener("click", (event)=>{
+    
     const numberID = event.target.getAttribute("id");
-    console.log(numberID);
+    //console.log(numberID);
     if (numberID !== null){
         currentValue = convertIdToValue(numberID);
-        num += currentValue;
-        display.textContent += currentValue;
-        console.log(num);
+        //console.log(currentValue);
+        if (currentValue == "operator"){
+            operatorSelected(event.target);
+            //console.log(event)
+        }else{
+            if (currentOperator !== "")
+            {
+                num += currentValue;
+                secondNumber = parseInt(num);
+                display.textContent = num;
+            }else{
+                num += currentValue;
+                firstNumber = parseInt(num);
+                display.textContent = num;
+            }
+            
+            //console.log(num);
+        }
+
     }
+    debugFirstSecond();
     
 })
 
-operatorButtons.addEventListener("click", (event)=>{
-    event.preventDefault();
-    operatorSelected(event.target);
+// operatorButtons.addEventListener("click", (event)=>{
+//     event.preventDefault();
+//     operatorSelected(event.target);
 
-})
+// })
 
 function convertIdToValue(id){
     switch(id){
@@ -65,6 +164,28 @@ function convertIdToValue(id){
         case "eight": return 8; break; 
         case "nine": return 9; break; 
         case "zero": return 0; break; 
+        case "clear": return "operator"; break; 
+        case "equals": return "operator"; break; 
+        case "div": return "operator"; break;
+        case "add": return "operator"; break; 
+        case "multi": return "operator"; break;
+        case "sub": return "operator"; break; 
          default: return ; 
     }
+}
+
+function add(a, b){
+    return a + b; 
+}
+
+function divide(a, b){
+    return a/b;
+}
+
+function subtract(a, b){
+    return a - b;
+}
+
+function multiply(a, b){
+    return a * b
 }
