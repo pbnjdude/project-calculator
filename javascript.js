@@ -10,9 +10,9 @@ let total = "";
 
 
 ///debug
-const firstNumberDebug = document.querySelector(".firstNumber");
-const secondNumberDebug = document.querySelector(".secondNumber");
-const numDebug =document.querySelector(".num");
+//const firstNumberDebug = document.querySelector(".firstNumber");
+//const secondNumberDebug = document.querySelector(".secondNumber");
+//const numDebug =document.querySelector(".num");
 
 
 function clearDisplay(){
