@@ -1,8 +1,6 @@
 const display = document.querySelector(".values");
 const equalsButton = document.getElementById("equals");
-//const operatorButtons = document.getElementById("operators");
 const allOperatorButtons = document.querySelectorAll(".operator");
-//console.log(allOperatorButtons);
 let equasion = [];
 let currentOperator ="";
 let num = ""; 
@@ -12,8 +10,8 @@ let total = "";
 
 
 ///debug
-const firstNumberDebug = document.querySelector(".firstNumber");
-const secondNumberDebug = document.querySelector(".secondNumber");
+//const firstNumberDebug = document.querySelector(".firstNumber");
+//const secondNumberDebug = document.querySelector(".secondNumber");
 
 
 function clearDisplay(){
@@ -24,14 +22,6 @@ function debugFirstSecond(){
     firstNumberDebug.textContent = "firstNum = " +firstNumber;
     secondNumberDebug.textContent = "secondNum = " + secondNumber;
 }
-// function numberPressed(num){
-//     equasion.push(num);
-    
-// }
-
-// function numberOne(){
-//     display.textContent = "1"
-// }
 function deselectAllOperators(){
     for (let i = 0; i <= 5; i++){
         let operatorID = allOperatorButtons[i].id;       
@@ -63,8 +53,7 @@ function operatorSelected(operator){
             let result
             switch(currentOperator){
                 case "multi": {
-                    result = multiply(firstNumber, secondNumber);
-                    //secondNumber = firstNumber; 
+                    result = multiply(firstNumber, secondNumber); 
                     num = result;
                     display.textContent = result; 
                 }break; 
@@ -101,19 +90,13 @@ function operatorSelected(operator){
 
     }
     if (num !== ""){
-        firstNumber = parseInt(num); 
+        firstNumber = parseFloat(num); 
     };
-    num = "";
-
-
-    
-    
+    num = ""; 
 }
 
 const numOne = document.getElementById("one");
 const button = document.querySelector(".buttons");
-
-
 
 
 button.addEventListener("click", (event)=>{
@@ -130,27 +113,19 @@ button.addEventListener("click", (event)=>{
             if (currentOperator !== "")
             {
                 num += currentValue;
-                secondNumber = parseInt(num);
+                secondNumber = parseFloat(num);
                 display.textContent = num;
             }else{
                 num += currentValue;
-                firstNumber = parseInt(num);
+                firstNumber = parseFloat(num);
                 display.textContent = num;
             }
-            
-            //console.log(num);
         }
 
     }
     debugFirstSecond();
     
 })
-
-// operatorButtons.addEventListener("click", (event)=>{
-//     event.preventDefault();
-//     operatorSelected(event.target);
-
-// })
 
 function convertIdToValue(id){
     switch(id){
@@ -164,6 +139,7 @@ function convertIdToValue(id){
         case "eight": return 8; break; 
         case "nine": return 9; break; 
         case "zero": return 0; break; 
+        case "decimal": return "."; break; 
         case "clear": return "operator"; break; 
         case "equals": return "operator"; break; 
         case "div": return "operator"; break;
@@ -175,15 +151,15 @@ function convertIdToValue(id){
 }
 
 function add(a, b){
-    return a + b; 
+    return parseFloat((a + b).toFixed(4)); 
 }
 
 function divide(a, b){
-    return a/b;
+    return parseFloat((a/b).toFixed(4));
 }
 
 function subtract(a, b){
-    return a - b;
+    return parseFloat((a - b).toFixed(4));
 }
 
 function multiply(a, b){

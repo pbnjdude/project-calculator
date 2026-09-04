@@ -37,6 +37,7 @@ body {
     border: 1px solid #555555;
     font-family: 'Courier New', Courier, monospace;
     font-weight: 900;
+    margin-top: 16px; 
 }
 .values{
     display: flex;
