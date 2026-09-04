@@ -32,68 +32,73 @@ function deselectAllOperators(){
 }
 function operatorSelected(operator){
     deselectAllOperators();
+
     const currentId = operator.id ;
     const operatorPressed = document.getElementById(currentId);
-    if (operator.classList.contains("clickedOperator"))
-    {
-        operatorPressed.classList.remove("clickedOperator")
-    }else{
-        operatorPressed.classList.add("clickedOperator")
-    }
-    
-    
-    switch(operator.id){
-        case "clear": {
-            display.textContent = "";
-            firstNumber = "";
-            secondNumber = ""; 
-            num = ""; 
-            currentOperator = ""; 
-            operatorPressed.classList.remove("clickedOperator")
-        }break;
-        case "equals": {
-            operatorPressed.classList.remove("clickedOperator")
-            let result
-            switch(currentOperator){
-                case "multi": {
-                    result = multiply(firstNumber, secondNumber); 
-                    firstNumber = result; 
-                    num = result;
-                    display.textContent = result; 
-                }break; 
-                case "add": {
-                    result = add(firstNumber, secondNumber)
-                    firstNumber = result; 
-                    num = result;
-                    display.textContent = result; ;
-                }break;
-                case "sub":{
-                    result = subtract(firstNumber, secondNumber)
-                    firstNumber = result; 
-                    num = result;
-                    display.textContent = result; ;
-                }break;
-                case "div": {
-                    result = divide(firstNumber, secondNumber)
-                    firstNumber = result; 
-                    num = result;
-                    display.textContent = result; ;
-                }break; 
-                
+        
+        
+        switch(operator.id){
+            case "clear": {
+                display.textContent = "";
+                firstNumber = "";
+                secondNumber = ""; 
+                num = ""; 
+                currentOperator = ""; 
+                operatorPressed.classList.remove("clickedOperator")
             }break;
-            
-        }
-        case "multi":
-        case "add":
-        case "sub":
-        case "div":{
-            if (firstNumber !== "" && secondNumber!== "" && currentOperator !== "")
-            {
-                equals();
+            case "equals": {
+                num = "";
+                operatorPressed.classList.remove("clickedOperator")
+                let result
+                switch(currentOperator){
+                    case "multi": {
+                        result = multiply(firstNumber, secondNumber); 
+                        firstNumber = result; 
+                        secondNumber = "";
+                        //num = result;
+                        display.textContent = result; 
+                    }break; 
+                    case "add": {
+                        result = add(firstNumber, secondNumber)
+                        firstNumber = result; 
+                        secondNumber = "";
+                        //num = result;
+                        display.textContent = result; ;
+                    }break;
+                    case "sub":{
+                        result = subtract(firstNumber, secondNumber)
+                        firstNumber = result; 
+                        secondNumber = "";
+                        //num = result;
+                        display.textContent = result; ;
+                    }break;
+                    case "div": {
+                        result = divide(firstNumber, secondNumber)
+                        firstNumber = result; 
+                        secondNumber = "";
+                        //num = result;
+                        display.textContent = result; ;
+                    }break; 
+                    
+                }
+                currentOperator = "equals";
+                break;
+                
             }
-            currentOperator = operator.id
-            
-        };break; 
+            case "multi":
+            case "add":
+            case "sub":
+            case "div":{
+                if (firstNumber !== "" && secondNumber!== "" && currentOperator !== "")
+                {
+                    equals();
+                }
+                if (firstNumber !== ""){
+
+                }
+                currentOperator = operator.id
+                
+            };break; 
 
 
     }
@@ -105,7 +110,22 @@ function operatorSelected(operator){
         }
     
     };
-    num = ""; 
+    if (currentOperator !== "equals"){
+        num = "";
+        
+    }else{
+        
+        firstNumber ="";;
+        currentOperator = "";
+    }
+    if (operator.classList.contains("clickedOperator"))
+    {
+        operatorPressed.classList.remove("clickedOperator")
+    }else{
+        if (firstNumber !== ""){
+            operatorPressed.classList.add("clickedOperator")
+        }
+    }
 }
 
 const numOne = document.getElementById("one");
@@ -126,12 +146,25 @@ button.addEventListener("click", (event)=>{
             if (currentOperator !== "")
             {
                 num += currentValue;
-                secondNumber = parseFloat(num);
                 display.textContent = num;
+                if (firstNumber !== ""){
+                    secondNumber = parseFloat(num);
+                }
             }else{
-                num += currentValue;
-                firstNumber = parseFloat(num);
-                display.textContent = num;
+
+                if (currentValue !== "."){
+                    num += currentValue;
+                    firstNumber = "";
+                    display.textContent = num;
+                }else{
+                    if (!num.contains(".")){
+                        num += currentValue;
+                        firstNumber = "";
+                        display.textContent = num;
+                    }
+                }
+                
+                
             }
         }
 
@@ -185,24 +218,28 @@ function equals(){
         case "multi": {
             result = multiply(firstNumber, secondNumber); 
             firstNumber = result;  
+            secondNumber = "";
             num = result;
             display.textContent = result; 
         }break; 
         case "add": {
             result = add(firstNumber, secondNumber)
             firstNumber = result;  
+            secondNumber = "";
             num = result;
             display.textContent = result; ;
         }break;
         case "sub":{
             result = subtract(firstNumber, secondNumber)
             firstNumber = result;  
+            secondNumber = "";
             num = result;
             display.textContent = result; ;
         }break;
         case "div": {
             result = divide(firstNumber, secondNumber)
             firstNumber = result;  
+            secondNumber = "";
             num = result;
             display.textContent = result; ;
         }break; 
