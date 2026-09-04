@@ -10,9 +10,9 @@ let total = "";
 
 
 ///debug
-//const firstNumberDebug = document.querySelector(".firstNumber");
-//const secondNumberDebug = document.querySelector(".secondNumber");
-//const numDebug =document.querySelector(".num");
+const firstNumberDebug = document.querySelector(".firstNumber");
+const secondNumberDebug = document.querySelector(".secondNumber");
+const numDebug =document.querySelector(".num");
 
 
 function clearDisplay(){
@@ -151,20 +151,9 @@ button.addEventListener("click", (event)=>{
                     secondNumber = parseFloat(num);
                 }
             }else{
-
-                if (currentValue !== "."){
-                    num += currentValue;
-                    firstNumber = "";
-                    display.textContent = num;
-                }else{
-                    if (!num.contains(".")){
-                        num += currentValue;
-                        firstNumber = "";
-                        display.textContent = num;
-                    }
-                }
-                
-                
+                num += currentValue;
+                firstNumber = "";
+                display.textContent = num;
             }
         }
 
@@ -185,7 +174,13 @@ function convertIdToValue(id){
         case "eight": return 8; break; 
         case "nine": return 9; break; 
         case "zero": return 0; break; 
-        case "decimal": return "."; break; 
+        case "decimal":{
+            if (num.includes(".")){
+                return ""; 
+            }else{
+                return ".";
+            }
+        } break;  
         case "clear": return "operator"; break; 
         case "equals": return "operator"; break; 
         case "div": return "operator"; break;
