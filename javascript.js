@@ -10,8 +10,9 @@ let total = "";
 
 
 ///debug
-//const firstNumberDebug = document.querySelector(".firstNumber");
-//const secondNumberDebug = document.querySelector(".secondNumber");
+const firstNumberDebug = document.querySelector(".firstNumber");
+const secondNumberDebug = document.querySelector(".secondNumber");
+const numDebug =document.querySelector(".num");
 
 
 function clearDisplay(){
@@ -21,6 +22,7 @@ function clearDisplay(){
 function debugFirstSecond(){
     firstNumberDebug.textContent = "firstNum = " +firstNumber;
     secondNumberDebug.textContent = "secondNum = " + secondNumber;
+    numDebug.textContent = "num = " + num;
 }
 function deselectAllOperators(){
     for (let i = 0; i <= 5; i++){
@@ -74,7 +76,7 @@ function operatorSelected(operator){
                     secondNumber = firstNumber; 
                     num = result;
                     display.textContent = result; ;
-                }
+                }break; 
                 
             }break;
             
@@ -90,7 +92,12 @@ function operatorSelected(operator){
 
     }
     if (num !== ""){
-        firstNumber = parseFloat(num); 
+        
+        if (firstNumber !== ""){
+            secondNumber = parseFloat(num); 
+        }else{
+            firstNumber = parseFloat(num); 
+        }
     };
     num = ""; 
 }
