@@ -20,9 +20,9 @@ function clearDisplay(){
 }
 
 function debugFirstSecond(){
-    //firstNumberDebug.textContent = "firstNum = " +firstNumber;
-    //secondNumberDebug.textContent = "secondNum = " + secondNumber;
-    //numDebug.textContent = "num = " + num;
+    firstNumberDebug.textContent = "firstNum = " +firstNumber;
+    secondNumberDebug.textContent = "secondNum = " + secondNumber;
+    numDebug.textContent = "num = " + num;
 }
 function deselectAllOperators(){
     for (let i = 0; i <= 5; i++){
@@ -48,6 +48,7 @@ function operatorSelected(operator){
             firstNumber = "";
             secondNumber = ""; 
             num = ""; 
+            currentOperator = ""; 
             operatorPressed.classList.remove("clickedOperator")
         }break;
         case "equals": {
@@ -56,24 +57,25 @@ function operatorSelected(operator){
             switch(currentOperator){
                 case "multi": {
                     result = multiply(firstNumber, secondNumber); 
+                    firstNumber = result; 
                     num = result;
                     display.textContent = result; 
                 }break; 
                 case "add": {
                     result = add(firstNumber, secondNumber)
-                    secondNumber = firstNumber; 
+                    firstNumber = result; 
                     num = result;
                     display.textContent = result; ;
                 }break;
                 case "sub":{
                     result = subtract(firstNumber, secondNumber)
-                    secondNumber = firstNumber; 
+                    firstNumber = result; 
                     num = result;
                     display.textContent = result; ;
                 }break;
                 case "div": {
                     result = divide(firstNumber, secondNumber)
-                    secondNumber = firstNumber; 
+                    firstNumber = result; 
                     num = result;
                     display.textContent = result; ;
                 }break; 
@@ -85,6 +87,10 @@ function operatorSelected(operator){
         case "add":
         case "sub":
         case "div":{
+            if (firstNumber !== "" && secondNumber!== "" && currentOperator !== "")
+            {
+                equals();
+            }
             currentOperator = operator.id
             
         };break; 
@@ -92,12 +98,12 @@ function operatorSelected(operator){
 
     }
     if (num !== ""){
-        
         if (firstNumber !== ""){
-            secondNumber = parseFloat(num); 
+            //secondNumber = parseFloat(num); 
         }else{
             firstNumber = parseFloat(num); 
         }
+    
     };
     num = ""; 
 }
@@ -171,4 +177,34 @@ function subtract(a, b){
 
 function multiply(a, b){
     return a * b
+}
+
+function equals(){
+    let result
+    switch(currentOperator){
+        case "multi": {
+            result = multiply(firstNumber, secondNumber); 
+            firstNumber = result;  
+            num = result;
+            display.textContent = result; 
+        }break; 
+        case "add": {
+            result = add(firstNumber, secondNumber)
+            firstNumber = result;  
+            num = result;
+            display.textContent = result; ;
+        }break;
+        case "sub":{
+            result = subtract(firstNumber, secondNumber)
+            firstNumber = result;  
+            num = result;
+            display.textContent = result; ;
+        }break;
+        case "div": {
+            result = divide(firstNumber, secondNumber)
+            firstNumber = result;  
+            num = result;
+            display.textContent = result; ;
+        }break; 
+    }
 }
