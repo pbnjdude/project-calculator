@@ -20,9 +20,9 @@ function clearDisplay(){
 }
 
 function debugFirstSecond(){
-    firstNumberDebug.textContent = "firstNum = " +firstNumber;
-    secondNumberDebug.textContent = "secondNum = " + secondNumber;
-    numDebug.textContent = "num = " + num;
+    //firstNumberDebug.textContent = "firstNum = " +firstNumber;
+    //secondNumberDebug.textContent = "secondNum = " + secondNumber;
+    //numDebug.textContent = "num = " + num;
 }
 function deselectAllOperators(){
     for (let i = 0; i <= 5; i++){
